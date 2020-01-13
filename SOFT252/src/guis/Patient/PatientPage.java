@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package guis.Patient;
 
 import guis.Patient.Patient_RateDoctor;
 
-/**
- *
- * @author cmoore9
- */
 public class PatientPage extends javax.swing.JFrame {
 
     /**
@@ -143,7 +134,8 @@ public class PatientPage extends javax.swing.JFrame {
     }//GEN-LAST:event_ViewAppointbtnActionPerformed
 
     private void RequestbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RequestbtnActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new guis.Patient.Patient_RequestAppointment().setVisible(true);
     }//GEN-LAST:event_RequestbtnActionPerformed
 
     /**

@@ -5,10 +5,7 @@
  */
 package guis.Patient;
 
-/**
- *
- * @author cmoore9
- */
+
 public class Patient_ViewPrescription extends javax.swing.JFrame {
 
     /**

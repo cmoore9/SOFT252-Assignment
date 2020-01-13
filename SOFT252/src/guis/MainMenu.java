@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 package guis;
+import guis.Patient.Patient_Request;
+import source.Data;
+import guis.MessageBox;
+import source.User;
 
-/**
- *
- * @author cmoore9
- */
 public class MainMenu extends javax.swing.JFrame {
 
     /**
@@ -16,6 +16,10 @@ public class MainMenu extends javax.swing.JFrame {
      */
     public MainMenu() {
         initComponents();
+        //inst.setup();
+        //System.out.println(Data.patients[0].getPassword());
+        //System.out.println(Data.patients[0].getId());
+
     }
 
     /**
@@ -28,10 +32,10 @@ public class MainMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        passwordtxt = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        userIDtxt = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         MainSubmitbtn = new javax.swing.JButton();
@@ -41,18 +45,18 @@ public class MainMenu extends javax.swing.JFrame {
 
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        passwordtxt.setColumns(20);
+        passwordtxt.setRows(5);
+        jScrollPane1.setViewportView(passwordtxt);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel1.setText("HOSPITAL");
 
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        userIDtxt.setColumns(20);
+        userIDtxt.setRows(5);
+        jScrollPane2.setViewportView(userIDtxt);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("User ID");
@@ -62,11 +66,15 @@ public class MainMenu extends javax.swing.JFrame {
 
         MainSubmitbtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         MainSubmitbtn.setText("Submit");
+        MainSubmitbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MainSubmitbtnActionPerformed(evt);
+            }
+        });
 
         mainNewUserbtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         mainNewUserbtn.setText("New User?");
         mainNewUserbtn.setToolTipText("");
-        mainNewUserbtn.setActionCommand("New User?");
         mainNewUserbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mainNewUserbtnActionPerformed(evt);
@@ -82,13 +90,10 @@ public class MainMenu extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(302, 302, 302)
                         .addComponent(jLabel3))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(302, 302, 302)
-                            .addComponent(jLabel2))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(302, 302, 302)
+                        .addComponent(jLabel2)
+                        .addGap(10, 10, 10)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -100,13 +105,16 @@ public class MainMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(MainSubmitbtn)
                 .addGap(212, 212, 212))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(124, 124, 124)
+                .addGap(135, 135, 135)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -127,8 +135,61 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void mainNewUserbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainNewUserbtnActionPerformed
         this.dispose();
-        new New_User().setVisible(true); // Main Form to show after the Login Form..
+        new Patient_Request().setVisible(true); // Main Form to show after the Login Form..
     }//GEN-LAST:event_mainNewUserbtnActionPerformed
+
+    private void check(String ID, User[] user) {
+        
+        int value = Data.findByID(ID);
+        System.out.println("Value: " + value);
+        if (value != -1) {
+            int position = Data.findByID(ID);
+            if (user[position].getPassword().equals(passwordtxt.getText()) ) {
+                this.dispose();
+                
+            }
+            else {
+                MessageBox.infoBox("Incorrect Password", "WRONG INFO");
+            }
+        }
+       
+    }
+    
+    private void MainSubmitbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MainSubmitbtnActionPerformed
+        String ID = userIDtxt.getText();
+        
+        System.out.println(userIDtxt.getText().charAt(0));
+        System.out.println(ID);
+        if (userIDtxt.getText().charAt(0) == 'P') { 
+            
+            check(ID, Data.patients);
+            this.dispose();
+            new guis.Patient.PatientPage().setVisible(true);
+        }
+        else if (userIDtxt.getText().charAt(0) == 'D') {
+            check(ID, Data.doctors);
+            this.dispose();
+            new guis.Doctor.DoctorPage().setVisible(true);
+        }
+        else if (userIDtxt.getText().charAt(0) == 'S') {
+            check(ID, Data.secretaries);
+            this.dispose();
+            new guis.Secretary.SecretaryPage().setVisible(true);
+        }
+        else if (userIDtxt.getText().charAt(0) == 'A') {
+            check(ID, Data.admins);
+            this.dispose();
+            new guis.Admin.AdminPage().setVisible(true);
+        }
+        else {
+            MessageBox.infoBox("Incorrect User Type", "WRONG INFO");
+        }
+
+        
+
+        
+        
+    }//GEN-LAST:event_MainSubmitbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,8 +233,8 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JButton mainNewUserbtn;
+    private javax.swing.JTextArea passwordtxt;
+    private javax.swing.JTextArea userIDtxt;
     // End of variables declaration//GEN-END:variables
 }
